@@ -1,0 +1,67 @@
+admin:
+ name: leo
+guest:
+ name: nancy
+logging:
+  level:
+   com.leo: debug
+   com.mapper: debug
+spring:
+  messages:
+    basename: i18n/login
+  thymeleaf:
+    cache: false
+# 启用hiddenMethod过滤器
+  mvc:
+    date-format: yyyy-MM-dd
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    username: root
+    password: mysql
+    url: jdbc:mysql://127.0.0.1:3306/ssm
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    filters: stat,wall
+
+mybatis:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+    #2.0以后自动执行脚本要开启
+#    schema:
+#     - classpath:sql/employee.sql
+#    initialization-mode: always
+
+#转发到/error进行自适应响应效果处理
+#spring:
+#  profiles:
+#    active: prod
+---
+spring:
+  profiles: prod
+server:
+  port: 8082
+---
+spring:
+  profiles: dev
+server:
+  port: 8083
